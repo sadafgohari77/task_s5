@@ -1,0 +1,146 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>calculator</title>
+    <meta name="description" content="calculator">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/css_reset.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/main.js"></script>
+  </head>
+  <body>
+    <div class="flex-container ">
+      <div class="flex-item">
+        <div class="label" id="DisplayCalculator">
+          <div>
+             <p class="display-input" id="inPut" >enter numbers...</p>
+          </div>
+          <div>
+            <p class="display-number" id="displayNumber">  </p>
+          </div>
+          <div>
+            <p class="display-output" id="outPut"></p>
+          </div>
+        </div>
+        <div class="is-flex">
+          <a class="all-clear-calculator background-color-orange" onclick="allClear()">
+            <span>
+              Ac
+            </span>
+          </a>
+        </div>
+        <div class="row-calculator">
+          <a class="button-calculator-set-operations background-color-red"  onclick="clearOneNumber()">
+            <p>
+              C
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-darkgray"  onclick="inPutPhrase( '%' )">
+            <p >
+             %
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-darkgray"   onclick="inPutPhrase( '√' )">
+            <p>
+              √
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-darkgray"   onclick="inPutPhrase( '^' )">
+            <p>
+              ^
+            </p>
+          </a>
+        </div>
+        <div class="row-calculator">
+          <a class="button-calculator-set-operations background-color-gray"   onclick="inPutPhrase( '7' )">
+            <p>
+              7
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-gray"   onclick="inPutPhrase( '8' )">
+            <p>
+              8
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-gray"   onclick="inPutPhrase( '9' )">
+            <p>
+              9
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-darkgray"  onclick="inPutPhrase( '÷' )">
+            <p>
+              ÷
+            </p>
+          </a>
+        </div>
+        <div class="row-calculator">
+          <a class="button-calculator-set-operations background-color-gray"  onclick="inPutPhrase( '4' )">
+            <p>
+              4
+           </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-gray"   onclick="inPutPhrase( '5' )">
+            <p>
+              5
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-gray"  onclick="inPutPhrase( '6' )">
+            <p >
+              6
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-darkgray"  onclick="inPutPhrase( '*' )">
+            <p >
+              ×
+            </p>
+          </a>
+        </div>
+        <div class="row-calculator">
+          <a class="button-calculator-set-operations background-color-gray" onclick="inPutPhrase( '1' )">
+            <p>
+              1
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-gray"  onclick="inPutPhrase( '2' )">
+            <p>
+              2
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-gray" onclick="inPutPhrase( '3' )">
+            <p>
+              3
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-darkgray" onclick="inPutPhrase( '-' )">
+            <p>
+              -
+            </p>
+          </a>
+        </div>
+        <div class="row-calculator">
+          <a class="button-calculator-set-operations background-color-gray"  onclick="inPutPhrase( '0' )">
+            <p>
+              0
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-gray"  onclick="inPutPhrase( '.' )">
+            <p>
+              .
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-darkgray" onclick="calculatePhrase()">
+            <p>
+              =
+            </p>
+          </a>
+          <a class="button-calculator-set-operations background-color-darkgray" onclick="inPutPhrase( '+' )">
+            <p>
+              +
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
