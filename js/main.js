@@ -5,12 +5,13 @@ let operand = new Array() ;
 let number = '' ;
 let counter = 0 ;
 let checkedDisplay ;
-let isOperand;
-let lengthResult = 0;
+let currentOperator ;
+let lengthResult = 0 ;
+let counterRepetitonl = 1 ;
 document.addEventListener('keydown',function (entry) {
   if( ( entry.code === 'Enter' ) || ( entry.code === 'NumpadEnter' ) || ( entry.code === 'Equal' ) ) {
       calculatePhrase();
-  } else if ( ( entry.key === 'Backspace' ) || ( entry.code == 'Delete' ) ) {
+  } else if ( ( entry.code === 'Backspace' ) || ( entry.code == 'Delete' ) ) {
       clearOneNumber() ;
   } else if( entry.code === 'NumpadDivide' ) {
       inPutPhrase ( "÷" )
@@ -29,7 +30,6 @@ function inPutPhrase ( selectedButton ) {
             document.getElementById('inPut').innerText = displayCalculator;
         }
     }
-
     if( ( result != 0 ) && ( result === result) ){
         displayCalculator = result ;
         document.getElementById('outPut').innerText  = "" ;
@@ -38,7 +38,6 @@ function inPutPhrase ( selectedButton ) {
         result = 0 ;
 
     }
-
     if( ( selectedButton < 10 ) || ( selectedButton === '.' ) ){
 
         displayNumber += selectedButton ;
@@ -48,7 +47,6 @@ function inPutPhrase ( selectedButton ) {
         document.getElementById('inPut').innerText  = displayCalculator ;
         displayNumber = '' ;
     }
-
 }
 const clearOneNumber = () => {
     displayNumber = displayNumber.slice( 0 , -1 ) ;
@@ -63,12 +61,12 @@ function allClear () {
     number = "" ;
     counter = 0 ;
     result = 0 ;
-    isOperand = "" ;
+    currentOperator = "" ;
     numbers=[];
     operand=[];
 }
 function calculatePhrase () {
-     checkedDisplay = displayCalculator.slice(-1) ;
+    checkedDisplay = displayCalculator.slice(-1) ;
     if ( ( checkedDisplay < 10 ) || ( checkedDisplay === "." ) ) {
         displayCalculator = displayNumber ;
         document.getElementById('inPut').innerText  = displayCalculator ;
@@ -86,28 +84,37 @@ function calculatePhrase () {
     }
     for ( counter ; counter <= displayCalculator.length ; ++counter ) {
         if ( ( displayCalculator[ counter ] < 10 ) || ( displayCalculator[ counter ] === '.' ) ) {
-            number += displayCalculator[ counter ];
+            if ( counterRepetitonl % 2 ==0 ){
+                let beforeCounter = displayCalculator.slice( 0 , counter -1 );
+                let afterCounter = displayCalculator.slice( counter , );
+                displayCalculator = beforeCounter + afterCounter;
+                document.getElementById('inPut').innerText = displayCalculator ;
+                counter -= 1;
+                number = "" ;
+                counterRepetitonl = 1 ;
+            }
+            number += displayCalculator[ counter ] ;
         } else {
             insertNumberToArray() ;
             insertOperandToArray() ;
             while ( operatorPriority() ) {
                 let operandExit = operand.pop () ;
-                let isOperand = operand.pop () ;
+                let currentOperatorT = operand.pop () ;
                 operand.push( operandExit ) ;
-                calculations(isOperand);
+                calculations(currentOperatorT);
 
             }
         }
     }
     if ( ( counter > displayCalculator.length ) && ( ( operand.length ) != 0 )  ) {
         for ( let count = 0; count < operand.length ; count++ ) {
-            isOperand = operand.pop() ;
-            calculations( isOperand ) ;
+            currentOperator = operand.pop() ;
+            calculations( currentOperator ) ;
         }
     }
     if ( (numbers.length != 1 ) && ( operand.length === 0) ) {
-        isOperand = "*" ;
-        calculations( isOperand ) ;
+        currentOperator = "*" ;
+        calculations( currentOperator ) ;
     }
         result = numbers.pop() ;
     if( result != result ){
@@ -116,45 +123,53 @@ function calculatePhrase () {
     }else{
         document.getElementById('outPut').innerText  = result ;
         operand=[];
-
     }
 }
 const insertNumberToArray = () => {
     if ( ( number != '' ) && ( number != "-" ) ) {
         numbers.push( number ) ;
         number = '' ;
+    }else if ( number == "-" ) {
+        number="";
+        counterRepetitonl++ ;
+        console.log(counterRepetitonl)
+        let beforeCounter = displayCalculator.slice( 0 , counter -1 );
+        let afterCounter = displayCalculator.slice( counter , );
+        displayCalculator = beforeCounter + afterCounter;
+        document.getElementById('inPut').innerText = displayCalculator ;
+        counter -= 1;
     }
 }
 function  operatorPriority () {
-    let isOperand = operand [operand.length - 1];
+    let currentOperatorT = operand [operand.length - 1];
     let lastOperand = operand [operand.length - 2];
-    if ( (isOperand === "^") && ( lastOperand === "√" ) ) {
+    if ( (currentOperatorT === "^") && ( lastOperand === "√" ) ) {
         return true;
-    }
-    if ( (isOperand === "√") && ( lastOperand === "^" ) ) {
+    } else if ( (currentOperatorT === "√") && ( lastOperand === "^" ) ) {
         return true;
-    }
-    if ((isOperand === "*") || (isOperand === "÷")) {
+    } else if ((currentOperatorT === "*") || (currentOperatorT === "÷")) {
         if ((lastOperand === "^") || (lastOperand === "√") || (lastOperand === "*") || (lastOperand === "÷")) {
             return true;
         }
-    }
-    if (isOperand === "%") {
+    } else if (currentOperatorT === "%") {
         if ((lastOperand === "^") || (lastOperand === "√") || (lastOperand === "*") || (lastOperand === "÷") || (lastOperand === "%")) {
             return true;
         }
-    }
-    if ((isOperand === "+") || (isOperand === "-")) {
+    } else if ((currentOperatorT === "+") || (currentOperatorT === "-")) {
         if ((lastOperand === "^") || (lastOperand === "√") || (lastOperand === "*") || (lastOperand === "÷") || (lastOperand === "%") || (lastOperand === "+") || (lastOperand === "-")) {
                 return true;
         }
+    } else {
+        return false ;
     }
 
 }
 function insertOperandToArray () {
-    if ( ( displayCalculator[ counter ] != undefined ) && ( ( displayCalculator[ counter -1 ] < 10  ) || ( displayCalculator[ counter -1 ] ==undefined  ) ) ) {
+
+    if ( ( displayCalculator[ counter ] != undefined ) && ( ( displayCalculator[ counter -1 ] < 10  ) || ( displayCalculator[ counter -1 ] == undefined  ) ) ) {
         operand.push( displayCalculator[ counter ] ) ;
-    } else if ( ( displayCalculator[ counter ] === '-' ) && ( number == '' ) ) {
+        counterRepetitonl = 1 ;
+    } else if (  ( displayCalculator[ counter ] === '-' ) && ( number == '' ) ){
         number = displayCalculator[ counter ] ;
     }else if ( ( ( displayCalculator[ counter ] != undefined ) && ( displayCalculator [counter] != "√" ) ) || ( ( displayCalculator [ counter - 1] === "√" ) && ( displayCalculator [ counter ] === "√" ) ) ){
         let operandExit = displayCalculator[ counter ];
@@ -163,34 +178,35 @@ function insertOperandToArray () {
         displayCalculator = beforeCounter + afterCounter;
         operand.pop();
         operand.push(operandExit);
+        counterRepetitonl = 1 ;
         document.getElementById('inPut').innerText = displayCalculator ;
         counter -= 1;
     }
 }
-function calculations ( isOperand ) {
-    if( isOperand === "√" ) {
+function calculations ( currentOperator ) {
+    if( currentOperator === "√" ) {
         let number = parseFloat( numbers.pop() ) ;
-        result = Math.sqrt ( number ) ;
+        result = Math.sqrt ( number ).toFixed(2) ;
     } else {
         let number2 =  parseFloat( numbers.pop () ) ;
         let number1 = parseFloat( numbers.pop () ) ;
         if ( ( number1 === undefined ) || ( number1 != number1) ) { number1 = number2 ;}
-        if ( isOperand === "^" ) {
+        if ( currentOperator === "^" ) {
             result = Math.pow( number1 , number2 ).toFixed(2);
         }
-        if ( isOperand === "*" ) {
+        if ( currentOperator === "*" ) {
             result = number1 * number2 ;
         }
-        if ( isOperand === "÷" ) {
+        if ( currentOperator === "÷" ) {
             result = ( number1 / number2 ).toFixed(2);
         }
-        if ( isOperand === "%" ) {
-            result = number1 % number2;
+        if ( currentOperator === "%" ) {
+            result = ( number1 % number2 ).toFixed(2) ;
         }
-        if ( isOperand === "+" ) {
+        if ( currentOperator === "+" ) {
             result = number1 + number2;
         }
-        if ( isOperand === "-" ) {
+        if ( currentOperator === "-" ) {
             result = ( number1 - number2 ).toFixed(2);
         }
     }
