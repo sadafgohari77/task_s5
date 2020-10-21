@@ -166,7 +166,6 @@ function  operatorPriority () {
     } else {
         return false ;
     }
-
 }
 function insertOperandToArray () {
     if ( ( displayCalculator [ counter ] != undefined ) && ( ( displayCalculator [ counter -1 ] < 10  ) || ( displayCalculator [ counter -1 ] == undefined  ) ) ) {
