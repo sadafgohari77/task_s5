@@ -7,7 +7,7 @@ let counter = 0 ;
 let checkedDisplay ;
 let currentOperator ;
 let lengthResult = 0 ;
-let counterRepetitonl = 1 ;
+let counterRepetiton = 1 ;
 document.addEventListener('keydown',function (entry) {
   if( ( entry.code === 'Enter' ) || ( entry.code === 'NumpadEnter' ) || ( entry.code === 'Equal' ) ) {
       calculatePhrase();
@@ -84,14 +84,14 @@ function calculatePhrase () {
     }
     for ( counter ; counter <= displayCalculator.length ; ++counter ) {
         if ( ( displayCalculator[ counter ] < 10 ) || ( displayCalculator[ counter ] === '.' ) ) {
-            if ( counterRepetitonl % 2 ==0 ){
+            if ( counterRepetiton % 2 ==0 ){
                 let beforeCounter = displayCalculator.slice( 0 , counter -1 );
                 let afterCounter = displayCalculator.slice( counter , );
                 displayCalculator = beforeCounter + afterCounter;
                 document.getElementById('inPut').innerText = displayCalculator ;
                 counter -= 1;
                 number = "" ;
-                counterRepetitonl = 1 ;
+                counterRepetiton = 1 ;
             }
             number += displayCalculator[ counter ] ;
         } else {
@@ -131,8 +131,8 @@ const insertNumberToArray = () => {
         number = '' ;
     }else if ( number == "-" ) {
         number="";
-        counterRepetitonl++ ;
-        console.log(counterRepetitonl)
+        counterRepetiton++ ;
+        console.log(counterRepetiton)
         let beforeCounter = displayCalculator.slice( 0 , counter -1 );
         let afterCounter = displayCalculator.slice( counter , );
         displayCalculator = beforeCounter + afterCounter;
@@ -168,7 +168,7 @@ function insertOperandToArray () {
 
     if ( ( displayCalculator[ counter ] != undefined ) && ( ( displayCalculator[ counter -1 ] < 10  ) || ( displayCalculator[ counter -1 ] == undefined  ) ) ) {
         operand.push( displayCalculator[ counter ] ) ;
-        counterRepetitonl = 1 ;
+        counterRepetiton = 1 ;
     } else if (  ( displayCalculator[ counter ] === '-' ) && ( number == '' ) ){
         number = displayCalculator[ counter ] ;
     }else if ( ( ( displayCalculator[ counter ] != undefined ) && ( displayCalculator [counter] != "√" ) ) || ( ( displayCalculator [ counter - 1] === "√" ) && ( displayCalculator [ counter ] === "√" ) ) ){
@@ -178,7 +178,7 @@ function insertOperandToArray () {
         displayCalculator = beforeCounter + afterCounter;
         operand.pop();
         operand.push(operandExit);
-        counterRepetitonl = 1 ;
+        counterRepetiton = 1 ;
         document.getElementById('inPut').innerText = displayCalculator ;
         counter -= 1;
     }
